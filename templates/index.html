@@ -30,6 +30,7 @@
         <h1>Verify the user by Entering Password</h1>
         <br>
         <form action={{ url_for('verify') }} method="POST" name="verify" class="row g-3">
+            <label for="">{{rfid}}</label>
             <div class="col-auto">
                 <label for="inputPassword2" class="visually-hidden">Password</label>
                 <input type="password" class="form-control" id="inputPassword2" name="pswd" placeholder="Password">
