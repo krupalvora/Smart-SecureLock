@@ -1,17 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <title>Verify</title>
+
+    <style>
+        body { 
+            background-color: #76ffe8; 
+        }
+        .container-fluid {
+            display: block;
+            width: 50%;
+            margin: 0 auto;
+            border: 5px solid black;
+            margin-top: 10%;
+            border-radius: 10px;
+        }
+    </style>
 </head>
+
 <body>
-    
-<form action="{{ url_for('verify') }}"  method="POST" name="verify">
-    <input type="password" name="pswd" placeholder="password">
-    <button type="submit" value="submit" >Submit</button>
-</form>
+    <div class="container-fluid" textalign="center">
+        <h1>Verify the user by Entering Password</h1>
+        <br>
+        <form action={{ url_for('verify') }} method="POST" name="verify" class="row g-3">
+            <div class="col-auto">
+                <label for="inputPassword2" class="visually-hidden">Password</label>
+                <input type="password" class="form-control" id="inputPassword2" name="pswd" placeholder="Password">
+            </div>
+            <div class="col-auto">
+                <button type="submit" value="submit" class="btn btn-primary mb-3">Submit</button>
+            </div>
+        </form>
+    </div>
 
 </body>
+
 </html>
