@@ -3,11 +3,18 @@ import kv_mail
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired
 from dotenv import load_dotenv
 import os
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import firestore
+from firebase_config import CONFIG
 
 load_dotenv()
 
 app = Flask(__name__)
 TOKEN = URLSafeTimedSerializer(os.environ.get("SECRET_KEY"))
+cred = credentials.Certificate(CONFIG)
+firebase_admin.initialize_app(cred)
+db = firestore.client()
 
 
 @app.route('/')
@@ -17,18 +24,26 @@ def home():
 
 @app.route('/rfid/<rfid>')
 def rfid(rfid):
-    res = {'result': 1}
-    token = TOKEN.dumps(rfid, salt='rfid')
-    body = 'click here to login: ' + url_for('verified_rfid', token=token, _external=True)
-    user_email = 'tirth.thoria@sakec.ac.in'
-    kv_mail.mail(
-        os.environ.get('EMAIL'),
-        os.environ.get('PASSWORD'),
-        user_email,
-        "Verify your password",
-        body,
-    )
-    return jsonify(res)
+    try:
+        doc_ref = db.collection(u'users').document(rfid)
+        doc = doc_ref.get()
+        if doc.exists:
+            user_email = doc.to_dict()[u'email']
+            token = TOKEN.dumps(rfid, salt='rfid')
+            body = 'click here to login: ' + url_for('verified_rfid', token=token, _external=True)
+            kv_mail.mail(
+                os.environ.get('EMAIL'),
+                os.environ.get('PASSWORD'),
+                user_email,
+                "Verify your password",
+                body,
+            )
+            return "Email sent to " + user_email
+        else:
+            return "No such user exists"
+    except Exception as e:
+        print(e)
+        return "Error"
 
 
 @app.route('/verified_rfid/<token>')
@@ -55,6 +70,16 @@ def verify():
         else:
             res = {'result': 0}
             return jsonify(res)
+
+
+@app.route("/firebase")
+def firebase():
+    users_ref = db.collection(u'users')
+    docs = users_ref.stream()
+    ret = []
+    for doc in docs:
+        ret.append(doc.to_dict())
+    return jsonify(ret)
 
 
 if __name__ == '__main__':
