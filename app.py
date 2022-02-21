@@ -1,4 +1,3 @@
-import email
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 import kv_mail
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired
@@ -8,7 +7,7 @@ import os
 load_dotenv()
 
 app = Flask(__name__)
-s = URLSafeTimedSerializer(os.environ.get("SECRET_KEY"))
+TOKEN = URLSafeTimedSerializer(os.environ.get("SECRET_KEY"))
 
 
 @app.route('/')
@@ -19,17 +18,23 @@ def home():
 @app.route('/rfid/<rfid>')
 def rfid(rfid):
     res = {'result': 1}
-    token = s.dumps(rfid, salt='rfid')
+    token = TOKEN.dumps(rfid, salt='rfid')
     body = 'click here to login: ' + url_for('verified_rfid', token=token, _external=True)
-    user_email = 'krupal.vora@sakec.ac.in'
-    kv_mail.mail('mg9417054@gmail.com', 'eHi3mohwier', user_email, "Verify your password", body)
+    user_email = 'tirth.thoria@sakec.ac.in'
+    kv_mail.mail(
+        os.environ.get('EMAIL'),
+        os.environ.get('PASSWORD'),
+        user_email,
+        "Verify your password",
+        body,
+    )
     return jsonify(res)
 
 
 @app.route('/verified_rfid/<token>')
 def verified_rfid(token):
     try:
-        rfid = s.loads(token, salt='rfid', max_age=100)
+        rfid = TOKEN.loads(token, salt='rfid', max_age=100)
     except SignatureExpired:
         res = {'result': 0}
         return jsonify(res)
