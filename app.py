@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify
+from flask import Flask, render_template, request, url_for, jsonify
 import kv_mail
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired
 from dotenv import load_dotenv
@@ -61,10 +61,11 @@ def verify():
     if request.method == 'POST':
         pswd = request.form["pswd"]
         rfid = request.form["rfid"]
-        # check username and password
-        rfid = 'rfid'
-        pswd = 'pswd'
-        if rfid == 'rfid' and pswd == 'pswd':
+        doc_ref = db.collection(u'users').document(rfid)
+        doc = doc_ref.get()
+        if doc.exists:
+            password = doc.to_dict()[u'password']
+        if pswd == password:
             res = {'result': 1}
             return jsonify(res)
         else:
@@ -72,15 +73,5 @@ def verify():
             return jsonify(res)
 
 
-@app.route("/firebase")
-def firebase():
-    users_ref = db.collection(u'users')
-    docs = users_ref.stream()
-    ret = []
-    for doc in docs:
-        ret.append(doc.to_dict())
-    return jsonify(ret)
-
-
 if __name__ == '__main__':
-    app.run(host='localhost', port=5000, debug=True)
+    app.run(host='localhost', debug=True)
