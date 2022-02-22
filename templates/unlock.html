@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>SmartLock</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/unlock.css') }}">
+</head>
+
+<body style="background: #006b77;height: 100vh;">
+    <!-- Start: Login Form Clean -->
+    <section class="login-clean">
+        <form class="shadow" method="post" style="background: #2C3333;">
+            <h2 class="visually-hidden">Login Form</h2>
+            <div class="illustration" style="color: #006b77;">
+                <img class="img-fluid" src="{{ url_for('static', filename='images/unlock.svg') }}">
+                <h1 class="display-6" style="margin-top: 20px;margin-bottom: 0px;color: var(--bs-white);">&lt;&lt; Unlock &gt;&gt;</h1>
+            </div>
+            <div class="mb-3">
+                <input class="form-control" type="password" name="pin" placeholder="Enter Your Password..." autocomplete="off" style="background: #c9e8dd;text-align: center;">
+            </div>
+            <div class="mb-3">
+                <button class="btn btn-primary text-uppercase shadow d-block w-100" type="submit" style="background: #00829b;">Submit</button>
+            </div>
+        </form>
+    </section>
+    <!-- End: Login Form Clean -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

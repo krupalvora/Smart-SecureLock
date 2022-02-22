@@ -19,7 +19,12 @@ db = firestore.client()
 
 @app.route('/')
 def home():
-    return 'Home page'
+    return render_template('index.html')
+
+
+@app.route('/unlock')
+def unlock():
+    return render_template('unlock.html')
 
 
 @app.route('/rfid/<rfid>')
