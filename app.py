@@ -22,11 +22,6 @@ def home():
     return render_template('index.html')
 
 
-@app.route('/unlock')
-def unlock():
-    return render_template('unlock.html')
-
-
 @app.route('/rfid/<rfid>')
 def rfid(rfid):
     try:
@@ -35,7 +30,13 @@ def rfid(rfid):
         if doc.exists:
             user_email = doc.to_dict()[u'email']
             token = TOKEN.dumps(rfid, salt='rfid')
-            body = 'click here to login: ' + url_for('verified_rfid', token=token, _external=True)
+            doc_ref = db.collection(u'users').document(rfid)
+            doc = doc_ref.get()
+            blocked=password = doc.to_dict()[u'blocked']
+            if blocked is True:
+                body='Alert some one is using your blocked card'
+            else:
+                body = 'click here to login: ' + url_for('verified_rfid', token=token, _external=True)+'\n\n\n\n\n\n To block this card click here: ' + url_for('block', token=token, _external=True)
             kv_mail.mail(
                 os.environ.get('EMAIL'),
                 os.environ.get('PASSWORD'),
@@ -60,6 +61,19 @@ def verified_rfid(token):
         return jsonify(res)
     return render_template('unlock.html', rfid=rfid)
 
+@app.route('/block/<token>')
+def block(token):
+    try:
+        rfid = TOKEN.loads(token, salt='rfid', max_age=500)
+        doc_ref = db.collection(u'users').document(rfid)
+        doc = doc_ref.get()
+        username = doc.to_dict()[u'username']
+        doc_ref.update({u'blocked': True})
+        return "User " + username + " has been blocked"
+    except SignatureExpired:
+        res = {'result': 'block link expired'}
+        return jsonify(res)
+    return render_template('index.html')
 
 @app.route('/verify', methods=('GET', 'POST'))
 def verify():
@@ -68,6 +82,10 @@ def verify():
         rfid = request.form["rfid"]
         doc_ref = db.collection(u'users').document(rfid)
         doc = doc_ref.get()
+        blocked=password = doc.to_dict()[u'blocked']
+        if blocked is True:
+            res = {'result': 'Card is blocked'}
+            return jsonify(res)
         if doc.exists:
             password = doc.to_dict()[u'password']
         if pswd == password:
