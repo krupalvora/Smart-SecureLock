@@ -1,47 +1,329 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <title>Verify</title>
-
-    <style>
-        body {
-            background-color: #76ffe8;
-        }
-
-        .container-fluid {
-            display: block;
-            width: 50%;
-            margin: 0 auto;
-            border: 5px solid black;
-            margin-top: 10%;
-            border-radius: 10px;
-        }
-    </style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Home - Brand</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Kaushan+Script">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
-<body>
-    <div class="container-fluid" textalign="center">
-        <h1>Verify the user by Entering Password</h1>
-        <br>
-        <form action={{ url_for('verify') }} method="POST" name="verify" class="row g-3">
-            <label for="">{{rfid}}</label>
-            <div class="col-auto">
-                <label for="inputPassword2" class="visually-hidden">Password</label>
-                <input type="password" class="form-control" id="inputPassword2" name="pswd" placeholder="Password">
-                <input type="text" id="inputPassword2" name="rfid" value="{{rfid}}" hidden >
+<body id="page-top" data-bs-spy="scroll" data-bs-target="#mainNav" data-bs-offset="54">
+    <nav class="navbar navbar-dark navbar-expand-lg fixed-top bg-dark" id="mainNav">
+        <div class="container"><a class="navbar-brand" href="#page-top">Smart Lock</a><button data-bs-toggle="collapse"
+                data-bs-target="#navbarResponsive" class="navbar-toggler navbar-toggler-right" type="button"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><i
+                    class="fa fa-bars"></i></button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto text-uppercase">
+                    <li class="nav-item"></li>
+                    <li class="nav-item"></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#team">Team</a></li>
+                    <li class="nav-item"></li>
+                </ul>
             </div>
-            <div class="col-auto">
-                <button type="submit" value="submit" class="btn btn-primary mb-3">Submit</button>
+        </div>
+    </nav>
+    <header class="masthead" style="background: #006b77;">
+        <div class="container">
+            <div class="intro-text">
+                <div class="intro-lead-in"><span>Welcome To Smart Lock!</span></div>
+                <div class="intro-heading text-uppercase"><span>Security on your fingertip</span></div>
             </div>
-        </form>
+        </div>
+    </header>
+    <section id="about">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="text-uppercase">STEPS</h2>
+                    <h3 class="text-muted section-subheading">Steps to Use our Smart Lock</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <ul class="list-group timeline">
+                        <li class="list-group-item">
+                            <div class="timeline-image bg-white border-0"><img class="img-fluid mt-1"
+                                    src="assets/img/about/backg.jpeg" style="background: url(assets/img/backg.jpeg);">
+                            </div>
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <h4>Scan</h4>
+                                </div>
+                                <div class="timeline-body">
+                                    <p class="text-muted">Tap your RFID card at the distance of 2 to 3 cm from reader.
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item timeline-inverted">
+                            <div class="timeline-image bg-white border-0"><img class="img-fluid mt-6"
+                                    src="assets/img/about/2.jpg"></div>
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <h4> Check Mail</h4>
+                                </div>
+                                <div class="timeline-body">
+                                    <p class="text-muted"> Check your registered email address and click on link within a minute.
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="timeline-image bg-white border-0"><img class="img-fluid mt-1"
+                                    src="assets/img/about/3.jpg"></div>
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <h4>Enter Password</h4>
+                                </div>
+                                <div class="timeline-body">
+                                    <p class="text-muted">Enter your password and click on unlock button within a minute.
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-group-item timeline-inverted">
+                            <div class="timeline-image bg-white border-0"><img class="img-fluid mt-6"
+                                    src="assets/img/about/4.png"></div>
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <h4>Unlock</h4>
+                                </div>
+                                <div class="timeline-body">
+                                    <p class="text-muted">Congratulations you unlocked successfully.
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="bg-light" id="team">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="text-uppercase">OUR TEAM</h2>
+                </div>
+                <br>
+                <div class="col-sm-4">
+                    <div class="team-member"><img class="rounded-circle mx-auto" src="assets/img/team/1.jpg">
+                        <h4>Tirth Thoria</h4>
+                        <p class="text-muted">Student</p>
+                        <ul class="list-inline social-buttons">
+                            <li class="list-inline-item"><a href="#"><i class="fa fa-github"></i></a></li>
+                            <li class="list-inline-item"><a
+                                    href="https://www.linkedin.com/in/tirth-thoria-0165b31b0/"><i
+                                        class="fa fa-linkedin"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="team-member"><img class="rounded-circle mx-auto" src="assets/img/team/2 (2).jpg">
+                        <h4>Vivek Vadhiya</h4>
+                        <p class="text-muted">Student</p>
+                        <ul class="list-inline social-buttons">
+                            <li class="list-inline-item"><a href="#"><i class="fa fa-github"></i></a></li>
+                            <li class="list-inline-item"><a
+                                    href="https://www.linkedin.com/in/vivek-vadhiya-1a79181a7/"><i
+                                        class="fa fa-linkedin"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="team-member"><img class="rounded-circle mx-auto" src="assets/img/team/3.jpg">
+                        <h4>Krupal Vora</h4>
+                        <p class="text-muted">Student</p>
+                        <ul class="list-inline social-buttons">
+                            <li class="list-inline-item"><a href="#"><i class="fa fa-github"></i></a></li>
+                            <li class="list-inline-item"><a href="https://www.linkedin.com/in/krupal-vora-69b332204/"><i
+                                        class="fa fa-linkedin"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="center">
+                    <span class="copyright">Copyright&nbsp;© SmartLock 2022</span>
+                </div>
+                
+            </div>
+        </div>
+    </footer>
+    <div class="modal fade text-center portfolio-modal" role="dialog" tabindex="-1" id="portfolioModal1">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8 mx-auto">
+                            <div class="modal-body">
+                                <h2 class="text-uppercase">Project Name</h2>
+                                <p class="text-muted item-intro">Lorem ipsum dolor sit amet consectetur.</p><img
+                                    class="img-fluid d-block mx-auto" src="assets/img/portfolio/1-full.jpg">
+                                <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur
+                                    adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt
+                                    repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae,
+                                    nostrum, reiciendis facere nemo!</p>
+                                <ul class="list-unstyled">
+                                    <li>Date: January 2017</li>
+                                    <li>Client: Threads</li>
+                                    <li>Category: Illustration</li>
+                                </ul><button class="btn btn-primary" type="button" data-bs-dismiss="modal"><i
+                                        class="fa fa-times"></i><span>&nbsp;Close Project</span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
+    <div class="modal fade text-center portfolio-modal" role="dialog" tabindex="-1" id="portfolioModal2">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8 mx-auto">
+                            <div class="modal-body">
+                                <h2 class="text-uppercase">Project Name</h2>
+                                <p class="text-muted item-intro">Lorem ipsum dolor sit amet consectetur.</p><img
+                                    class="img-fluid d-block mx-auto" src="assets/img/portfolio/2-full.jpg">
+                                <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur
+                                    adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt
+                                    repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae,
+                                    nostrum, reiciendis facere nemo!</p>
+                                <ul class="list-unstyled">
+                                    <li>Date: January 2017</li>
+                                    <li>Client: Threads</li>
+                                    <li>Category: Illustration</li>
+                                </ul><button class="btn btn-primary" type="button" data-bs-dismiss="modal"><i
+                                        class="fa fa-times"></i><span>&nbsp;Close Project</span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade text-center portfolio-modal" role="dialog" tabindex="-1" id="portfolioModal3">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8 mx-auto">
+                            <div class="modal-body">
+                                <h2 class="text-uppercase">Project Name</h2>
+                                <p class="text-muted item-intro">Lorem ipsum dolor sit amet consectetur.</p><img
+                                    class="img-fluid d-block mx-auto" src="assets/img/portfolio/3-full.jpg">
+                                <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur
+                                    adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt
+                                    repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae,
+                                    nostrum, reiciendis facere nemo!</p>
+                                <ul class="list-unstyled">
+                                    <li>Date: January 2017</li>
+                                    <li>Client: Threads</li>
+                                    <li>Category: Illustration</li>
+                                </ul><button class="btn btn-primary" type="button" data-bs-dismiss="modal"><i
+                                        class="fa fa-times"></i><span>&nbsp;Close Project</span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade text-center portfolio-modal" role="dialog" tabindex="-1" id="portfolioModal4">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8 mx-auto">
+                            <div class="modal-body">
+                                <h2 class="text-uppercase">Project Name</h2>
+                                <p class="text-muted item-intro">Lorem ipsum dolor sit amet consectetur.</p><img
+                                    class="img-fluid d-block mx-auto" src="assets/img/portfolio/4-full.jpg">
+                                <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur
+                                    adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt
+                                    repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae,
+                                    nostrum, reiciendis facere nemo!</p>
+                                <ul class="list-unstyled">
+                                    <li>Date: January 2017</li>
+                                    <li>Client: Threads</li>
+                                    <li>Category: Illustration</li>
+                                </ul><button class="btn btn-primary" type="button" data-bs-dismiss="modal"><i
+                                        class="fa fa-times"></i><span>&nbsp;Close Project</span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade text-center portfolio-modal" role="dialog" tabindex="-1" id="portfolioModal5">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8 mx-auto">
+                            <div class="modal-body">
+                                <h2 class="text-uppercase">Project Name</h2>
+                                <p class="text-muted item-intro">Lorem ipsum dolor sit amet consectetur.</p><img
+                                    class="img-fluid d-block mx-auto" src="assets/img/portfolio/5-full.jpg">
+                                <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur
+                                    adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt
+                                    repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae,
+                                    nostrum, reiciendis facere nemo!</p>
+                                <ul class="list-unstyled">
+                                    <li>Date: January 2017</li>
+                                    <li>Client: Threads</li>
+                                    <li>Category: Illustration</li>
+                                </ul><button class="btn btn-primary" type="button" data-bs-dismiss="modal"><i
+                                        class="fa fa-times"></i><span>&nbsp;Close Project</span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade text-center portfolio-modal" role="dialog" tabindex="-1" id="portfolioModal6">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8 mx-auto">
+                            <div class="modal-body">
+                                <h2 class="text-uppercase">Project Name</h2>
+                                <p class="text-muted item-intro">Lorem ipsum dolor sit amet consectetur.</p><img
+                                    class="img-fluid d-block mx-auto" src="assets/img/portfolio/6-full.jpg">
+                                <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur
+                                    adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt
+                                    repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae,
+                                    nostrum, reiciendis facere nemo!</p>
+                                <ul class="list-unstyled">
+                                    <li>Date: January 2017</li>
+                                    <li>Client: Threads</li>
+                                    <li>Category: Illustration</li>
+                                </ul><button class="btn btn-primary" type="button" data-bs-dismiss="modal"><i
+                                        class="fa fa-times"></i><span>&nbsp;Close Project</span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/agency.js"></script>
 </body>
 
 </html>
