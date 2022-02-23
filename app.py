@@ -32,11 +32,16 @@ def rfid(rfid):
             token = TOKEN.dumps(rfid, salt='rfid')
             doc_ref = db.collection(u'users').document(rfid)
             doc = doc_ref.get()
-            blocked=password = doc.to_dict()[u'blocked']
-            if blocked is True:
-                body='Alert some one is using your blocked card'
+            blocked = doc.to_dict()[u'blocked']
+            if blocked:
+                body = 'Alert some one is using your blocked card'
             else:
-                body = 'click here to login: ' + url_for('verified_rfid', token=token, _external=True)+'\n\n\n\n\n\n To block this card click here: ' + url_for('block', token=token, _external=True)
+                body = (
+                    'click here to login: '
+                    + url_for('verified_rfid', token=token, _external=True)
+                    + '\n \n \nTo block this card click here: '
+                    + url_for('block', token=token, _external=True)
+                )
             kv_mail.mail(
                 os.environ.get('EMAIL'),
                 os.environ.get('PASSWORD'),
@@ -61,6 +66,7 @@ def verified_rfid(token):
         return jsonify(res)
     return render_template('unlock.html', rfid=rfid)
 
+
 @app.route('/block/<token>')
 def block(token):
     try:
@@ -73,7 +79,7 @@ def block(token):
     except SignatureExpired:
         res = {'result': 'block link expired'}
         return jsonify(res)
-    return render_template('index.html')
+
 
 @app.route('/verify', methods=('GET', 'POST'))
 def verify():
@@ -82,7 +88,7 @@ def verify():
         rfid = request.form["rfid"]
         doc_ref = db.collection(u'users').document(rfid)
         doc = doc_ref.get()
-        blocked=password = doc.to_dict()[u'blocked']
+        blocked = password = doc.to_dict()[u'blocked']
         if blocked is True:
             res = {'result': 'Card is blocked'}
             return jsonify(res)
