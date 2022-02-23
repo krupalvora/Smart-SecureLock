@@ -12,14 +12,15 @@
 <body style="background: #006b77;height: 100vh;">
     <!-- Start: Login Form Clean -->
     <section class="login-clean">
-        <form class="shadow" method="post" style="background: #2C3333;">
+        <form class="shadow" method="post" action="{{ url_for('verify') }}" style="background: #2C3333;">
             <h2 class="visually-hidden">Login Form</h2>
             <div class="illustration" style="color: #006b77;">
                 <img class="img-fluid" src="{{ url_for('static', filename='images/unlock.svg') }}">
                 <h1 class="display-6" style="margin-top: 20px;margin-bottom: 0px;color: var(--bs-white);">&lt;&lt; Unlock &gt;&gt;</h1>
             </div>
             <div class="mb-3">
-                <input class="form-control" type="password" name="pin" placeholder="Enter Your Password..." autocomplete="off" style="background: #c9e8dd;text-align: center;">
+                <input class="form-control" type="password" name="pswd" placeholder="Enter Your Password..." autocomplete="off" style="background: #c9e8dd;text-align: center;">
+                <input type="text" name="rfid" value="{{rfid}}" hidden>
             </div>
             <div class="mb-3">
                 <button class="btn btn-primary text-uppercase shadow d-block w-100" type="submit" style="background: #00829b;">Submit</button>

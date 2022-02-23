@@ -58,7 +58,7 @@ def verified_rfid(token):
     except SignatureExpired:
         res = {'result': 0}
         return jsonify(res)
-    return render_template('index.html', rfid=rfid)
+    return render_template('unlock.html', rfid=rfid)
 
 
 @app.route('/verify', methods=('GET', 'POST'))
