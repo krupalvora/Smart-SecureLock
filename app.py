@@ -35,6 +35,15 @@ def rfid(rfid):
             blocked = doc.to_dict()[u'blocked']
             if blocked:
                 body = 'Alert some one is using your blocked card'
+                kv_mail.mail(
+                os.environ.get('EMAIL'),
+                os.environ.get('PASSWORD'),
+                user_email,
+                "Alert ",
+                body,
+            )
+                res = {'result': -1,'message': 'Card has been blocked'}
+                return jsonify(res)
             else:
                 body = (
                     'click here to login: '
@@ -49,9 +58,11 @@ def rfid(rfid):
                 "Verify your password",
                 body,
             )
-            return "Email sent to " + user_email
+            res = {'result': 1,'message': 'Email sent to : '+ user_email}
+            return jsonify(res)
         else:
-            return "No such user exists"
+            res = {'result': 0,'message': 'User not found'}
+            return jsonify(res)
     except Exception as e:
         print(e)
         return "Error"
@@ -75,9 +86,10 @@ def block(token):
         doc = doc_ref.get()
         username = doc.to_dict()[u'username']
         doc_ref.update({u'blocked': True})
-        return "User " + username + " has been blocked"
+        res = {'result': -1, 'message': 'User ' + username +' has been blocked'}
+        return jsonify(res)
     except SignatureExpired:
-        res = {'result': 'block link expired'}
+        res = {'result': 0, 'message': 'block link expired'}
         return jsonify(res)
 
 
@@ -90,15 +102,15 @@ def verify():
         doc = doc_ref.get()
         blocked = password = doc.to_dict()[u'blocked']
         if blocked is True:
-            res = {'result': 'Card is blocked'}
+            res = {'result': -1, 'message': 'User is blocked'}
             return jsonify(res)
         if doc.exists:
             password = doc.to_dict()[u'password']
         if pswd == password:
-            res = {'result': 1}
+            res = {'result': 1, 'message': 'User verified'}
             return jsonify(res)
         else:
-            res = {'result': 0}
+            res = {'result': 0, 'message': 'Wrong password'}
             return jsonify(res)
 
 
