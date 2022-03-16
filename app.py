@@ -115,4 +115,4 @@ def verify():
 
 
 if __name__ == '__main__':
-    app.run(host='https://sslock.herokuapp.com/', debug=False)
+    app.run(host='localhost', debug=False)
