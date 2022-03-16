@@ -11,7 +11,7 @@ from firebase_config import CONFIG
 load_dotenv()
 
 app = Flask(__name__)
-TOKEN = URLSafeTimedSerializer(os.environ.get("SECRET_KEY"))
+TOKEN = URLSafeTimedSerializer(os.getenv("SECRET_KEY"))
 cred = credentials.Certificate(CONFIG)
 firebase_admin.initialize_app(cred)
 db = firestore.client()
@@ -36,8 +36,8 @@ def rfid(rfid):
             if blocked:
                 body = 'Alert some one is using your blocked card'
                 kv_mail.mail(
-                    os.environ.get('EMAIL'),
-                    os.environ.get('PASSWORD'),
+                    os.getenv('EMAIL'),
+                    os.getenv('PASSWORD'),
                     user_email,
                     "Alert ",
                     body,
@@ -52,8 +52,8 @@ def rfid(rfid):
                     + url_for('block', token=token, _external=True)
                 )
             kv_mail.mail(
-                os.environ.get('EMAIL'),
-                os.environ.get('PASSWORD'),
+                os.getenv('EMAIL'),
+                os.getenv('PASSWORD'),
                 user_email,
                 "Verify your password",
                 body,
