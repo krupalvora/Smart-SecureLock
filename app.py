@@ -11,7 +11,7 @@ from firebase_config import CONFIG
 load_dotenv()
 
 app = Flask(__name__)
-TOKEN = URLSafeTimedSerializer(os.environ.get("SECRET_KEY"))
+TOKEN = URLSafeTimedSerializer(os.getenv("SECRET_KEY"))
 cred = credentials.Certificate(CONFIG)
 firebase_admin.initialize_app(cred)
 db = firestore.client()
@@ -36,13 +36,13 @@ def rfid(rfid):
             if blocked:
                 body = 'Alert some one is using your blocked card'
                 kv_mail.mail(
-                os.environ.get('EMAIL'),
-                os.environ.get('PASSWORD'),
-                user_email,
-                "Alert ",
-                body,
-            )
-                res = {'result': -1,'message': 'Card has been blocked'}
+                    os.getenv('EMAIL'),
+                    os.getenv('PASSWORD'),
+                    user_email,
+                    "Alert ",
+                    body,
+                )
+                res = {'result': -1, 'message': 'Card has been blocked'}
                 return jsonify(res)
             else:
                 body = (
@@ -52,19 +52,19 @@ def rfid(rfid):
                     + url_for('block', token=token, _external=True)
                 )
             kv_mail.mail(
-                os.environ.get('EMAIL'),
-                os.environ.get('PASSWORD'),
+                os.getenv('EMAIL'),
+                os.getenv('PASSWORD'),
                 user_email,
                 "Verify your password",
                 body,
             )
-            res = {'result': 1,'message': 'Email sent to : '+ user_email}
+            res = {'result': 1, 'message': 'Email sent to : ' + user_email}
             return jsonify(res)
         else:
-            res = {'result': 0,'message': 'User not found'}
+            res = {'result': 0, 'message': 'User not found'}
             return jsonify(res)
     except Exception as e:
-        print(e)
+        # print(e)
         return "Error"
 
 
@@ -86,7 +86,7 @@ def block(token):
         doc = doc_ref.get()
         username = doc.to_dict()[u'username']
         doc_ref.update({u'blocked': True})
-        res = {'result': -1, 'message': 'User ' + username +' has been blocked'}
+        res = {'result': -1, 'message': 'User ' + username + ' has been blocked'}
         return jsonify(res)
     except SignatureExpired:
         res = {'result': 0, 'message': 'block link expired'}
@@ -115,4 +115,4 @@ def verify():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run("0.0.0.0", debug=False)
