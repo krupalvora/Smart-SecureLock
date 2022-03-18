@@ -95,9 +95,9 @@ def block(token):
 
 @app.route('/verify', methods=('GET', 'POST'))
 def verify():
-    if request.method == 'POST':
-        pswd = request.form["pswd"]
-        rfid = request.form["rfid"]
+    if request.method == 'GET':
+        pswd = request.args.get('pswd')
+        rfid = request.args.get('rfid')
         doc_ref = db.collection(u'users').document(rfid)
         doc = doc_ref.get()
         blocked = password = doc.to_dict()[u'blocked']
