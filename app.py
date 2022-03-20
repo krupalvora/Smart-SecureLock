@@ -91,16 +91,34 @@ def block(token):
     except SignatureExpired:
         res = {'result': 0, 'message': 'block link expired'}
         return jsonify(res)
-
+    
 
 @app.route('/verify', methods=('GET', 'POST'))
 def verify():
-    if request.method == 'GET':
+    if request.method == 'POST':
+        pswd = request.form["pswd"]
+        rfid = request.form["rfid"]
+        doc_ref = db.collection(u'users').document(rfid)
+        doc = doc_ref.get()
+        blocked =  doc.to_dict()[u'blocked']
+        if blocked is True:
+            res = {'result': -1, 'message': 'User is blocked'}
+            return jsonify(res)
+        if doc.exists:
+            password = doc.to_dict()[u'password']
+        if pswd == password:
+            res = {'result': 1, 'message': 'User verified'}
+            doc_ref.update({u'status': True})
+            return jsonify(res)
+        else:
+            res = {'result': 0, 'message': 'Wrong password'}
+            return jsonify(res)
+    elif request.method == 'GET':
         pswd = request.args.get('pswd')
         rfid = request.args.get('rfid')
         doc_ref = db.collection(u'users').document(rfid)
         doc = doc_ref.get()
-        blocked = password = doc.to_dict()[u'blocked']
+        blocked =  doc.to_dict()[u'blocked']
         if blocked is True:
             res = {'result': -1, 'message': 'User is blocked'}
             return jsonify(res)
@@ -113,6 +131,21 @@ def verify():
             res = {'result': 0, 'message': 'Wrong password'}
             return jsonify(res)
 
-
+@app.route('/open/<rfid>')
+def open(rfid):
+    doc_ref = db.collection(u'users').document(rfid)
+    doc = doc_ref.get()
+    if doc.exists:
+        status = doc.to_dict()[u'status']
+        if status is True:
+            doc_ref.update({u'status': False})
+            res = {'result': 1, 'message': 'User verified'}
+            return jsonify(res)
+        else:
+            res = {'result': 0, 'message': 'Please dont make direct calls to this url'}
+            return jsonify(res)
+    else:
+        res = {'result': 0, 'message': 'User not found attempt to login directly'}
+        return jsonify(res)   
 if __name__ == '__main__':
     app.run("0.0.0.0", debug=False)
